@@ -4,16 +4,16 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-export default function DatePicker({ setDate }) {
+export default function DatePicker({ setTempDate }) {
 
     const handleChange = (newValue) => {
-        setDate(newValue);
+        setTempDate(newValue);
     };
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDatePicker
-                label="Date desktop"
+                label="Date"
                 inputFormat="MM/dd/yyyy"
                 onChange={handleChange}
                 renderInput={(params) => <TextField {...params} />}

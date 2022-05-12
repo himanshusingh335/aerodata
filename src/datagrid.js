@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid'
 
 const columns = [
-    { field: 'sl_no', headerName: 'Sl_no' },
-    { field: 'business_code', headerName: 'Business_code' },
+    { field: 'number', headerName: 'Flight Number' },
+    { field: 'model', headerName: 'Business_code' },
     { field: 'cust_number', headerName: 'Cust_number' },
     { field: 'clear_date', headerName: 'Clear_date' },
     { field: 'business_year', headerName: 'Business_year' },
@@ -20,29 +20,32 @@ const columns = [
     { field: 'invoice_id', headerName: 'Invoice_id' },
 ]
 
-const SearchGrid = ({ advancedSearch }) => {
-    const [tableData, setTableData] = useState([])
+const SearchGrid = ({ flightStatus, setFlightStatus, flightNumber, date }) => {
     useEffect(() => {
-        fetch("http://localhost:8080/B2B_invoice_backend/transactions?invoiceId=" + advancedSearch[0] + "&documentId=" + advancedSearch[1] + "&custNumber=" + advancedSearch[2] + "&bYear=" + advancedSearch[3] + "")
-            .then((data) => data.json())
-            .then((data) => setTableData(data))
-
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Host': 'aerodatabox.p.rapidapi.com',
+                'X-RapidAPI-Key': '091d3ca15fmshf687b8d71d5b41ep15a8d9jsn26fd0bb2a445'
+            }
+        };
+        fetch('https://aerodatabox.p.rapidapi.com/flights/number/' + flightNumber + '/' + date + '', options)
+            .then(response => response.json())
+            .then(response => setFlightStatus(response))
+            .catch(err => console.error(err));
     }, [])
 
     return (
-        <div style={{ height: 700, width: '100%', color: 'white' }}>
+        <div style={{ height: 700, width: '100%', color: 'black' }}>
             <DataGrid
-                rows={tableData}
+                rows={flightStatus}
                 columns={columns}
-                getRowId={(row) => row.sl_no}
+                getRowId={(row) => row.number}
                 pagination={true}
                 pageSize={10}
                 rowsPerPageOptions={[10, 20]}
                 checkboxSelection={true}
                 onSelectionModelChange={itm => console.log(itm)}
-                style={{
-                    color: 'white',
-                }}
 
             />
         </div>

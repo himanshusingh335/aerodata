@@ -1,33 +1,33 @@
 
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
 
 
+export default function SearchBar({ setTempFlightNumber }) {
 
-export default function SearchBar({ setFlightNumber }) {
-
-    function handleChange1(e) {
-        setFlightNumber(e.target.value);
+    function handleChange(e) {
+        setTempFlightNumber(e.target.value);
     }
 
-    return (<TextField
-        autoFocus
-        id="filled-basic"
-        variant="filled"
-        label="Flight number"
-        type="text"
-        fullWidth
-        onChange={(e) => {
-            handleChange1(e)
+    const StyledInputBase = styled(InputBase)(({ theme }) => ({
+        color: 'inherit',
+        '& .MuiInputBase-input': {
+            padding: theme.spacing(1, 1, 1, 0),
+            // vertical padding + font size from searchIcon
+            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+            transition: theme.transitions.create('width'),
+            width: '100%',
+            [theme.breakpoints.up('md')]: {
+                width: '20ch',
+            },
+        },
+    }));
 
-        }
-        }
+    return (<StyledInputBase
+        placeholder="Search Flight Number"
+        inputProps={{ 'aria-label': 'search' }}
+        onChange={handleChange}
     />)
 }
 

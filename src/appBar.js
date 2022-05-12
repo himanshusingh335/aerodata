@@ -4,10 +4,11 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import SearchBar from './searchBar';
 import DatePicker from './datePicker';
-
+import SearchIcon from '@mui/icons-material/Search';
+import SearchButton from './searchButton';
+import { useState } from 'react'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -25,8 +26,19 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-export default function PrimarySearchAppBar({ setFlightNumber, setDate }) {
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
 
+export default function PrimarySearchAppBar({ setFlightNumber, setDate }) {
+    const [tempFlightNumber, setTempFlightNumber] = useState("6E7932")
+    const [tempDate, setTempDate] = useState("2022-05-11")
     return (
         <Box sx={{ flexGrow: 1, }}>
             <AppBar position="static">
@@ -40,21 +52,17 @@ export default function PrimarySearchAppBar({ setFlightNumber, setDate }) {
                         AeroData
                     </Typography>
                     <Search>
-                        <SearchBar setFlightNumber={setFlightNumber} />
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <SearchBar setTempFlightNumber={setTempFlightNumber} />
                     </Search>
-                    <DatePicker setDate={setDate} />
+                    <DatePicker setTempDate={setTempDate} />
                     <Box sx={{
                         width: 30,
                         height: 100
                     }}></Box>
-                    <Button color="secondary" variant="outlined"
-                        onClick={() => {
-                            alert('clicked');
-                        }}
-                    >
-                        Search
-                    </Button>
-
+                    <SearchButton tempFlightNumber={tempFlightNumber} tempDate={tempDate} setDate={setDate} setFlightNumber={setFlightNumber} />
                 </Toolbar>
             </AppBar>
         </Box>
