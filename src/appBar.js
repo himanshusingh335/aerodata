@@ -4,8 +4,10 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
+import Button from '@mui/material/Button';
+import SearchBar from './searchBar';
+import DatePicker from './datePicker';
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -23,34 +25,10 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-    },
-}));
-
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({ setFlightNumber, setDate }) {
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, }}>
             <AppBar position="static">
                 <Toolbar>
                     <Typography
@@ -59,17 +37,24 @@ export default function PrimarySearchAppBar() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
-                        MUI
+                        AeroData
                     </Typography>
                     <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
+                        <SearchBar setFlightNumber={setFlightNumber} />
                     </Search>
+                    <DatePicker setDate={setDate} />
+                    <Box sx={{
+                        width: 30,
+                        height: 100
+                    }}></Box>
+                    <Button color="secondary" variant="outlined"
+                        onClick={() => {
+                            alert('clicked');
+                        }}
+                    >
+                        Search
+                    </Button>
+
                 </Toolbar>
             </AppBar>
         </Box>

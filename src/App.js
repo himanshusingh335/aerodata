@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PrimarySearchAppBar from "./appBar";
+import SearchGrid from "./datagrid";
 
 function App() {
   const [flightStatus, setFlightStatus] = useState([])
@@ -22,7 +23,10 @@ function App() {
   console.log(flightStatus);
   //console.log(flightStatus[0].greatCircleDistance);
   return (
-    <PrimarySearchAppBar />
+    <>
+      <PrimarySearchAppBar setFlightNumber={setFlightNumber} setDate={setDate} />
+      {/* <SearchGrid /> */}
+    </>
   );
 }
 
